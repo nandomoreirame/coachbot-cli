@@ -6,6 +6,10 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
+## [1.1.0] - 2026-02-18
+### Added
+- Add 20 new anti-coach phrases and curate existing ones.---
+
 ## [Unreleased]
 
 ## [1.1.0] - 2026-02-18
