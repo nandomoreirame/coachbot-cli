@@ -6,12 +6,21 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
-## [1.0.0] - 2026-02-18
-### Added
-- Add English and Portuguese phrase collections.
-- Add coachbot CLI and installer.---
-
 ## [Unreleased]
+
+## [1.1.0] - 2026-02-18
+
+### Added
+
+- 20 new sarcastic anti-coach phrases (EN and PT-BR) covering fresh themes: gratitude, fake it till you make it, resilience/LinkedIn, follow your passion, morning routine, think outside the box, networking, vision board, fall and get up, marathon, comfort zone, protagonist, trust the process, universe conspires, regret zone, plan A
+
+### Removed
+
+- 6 low-quality phrases from both language files: Chuck Norris jokes (3), printer pun, `var x=10` pun, hate quote
+
+### Changed
+
+- Reformat JSON phrase files to compact single-line-per-phrase style
 
 ## [1.0.0] - 2026-02-18
 
