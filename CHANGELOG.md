@@ -7,6 +7,13 @@ This project adheres to [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ---
 
 ## [1.0.0] - 2026-02-18
+### Added
+- Add English and Portuguese phrase collections.
+- Add coachbot CLI and installer.---
+
+## [Unreleased]
+
+## [1.0.0] - 2026-02-18
 
 ### Added
 
