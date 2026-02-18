@@ -100,4 +100,4 @@ Remove the `coachbot` line from your shell profile (`~/.bashrc`, `~/.zshrc`, etc
 
 ## License
 
-MIT
+[MIT](LICENSE)
