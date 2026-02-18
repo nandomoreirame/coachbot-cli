@@ -2,16 +2,7 @@
 
 Your anti-motivational coach for the terminal. Displays a random sarcastic quote every time you open a new shell. Available in English and Portuguese (Brazil).
 
-```
- ╭────────────────────────────────────────────────────╮
- │ Running in production? Then it's tested             │
- │ — CoachBot                                          │
- ╰────────────────────────────────────────────────────╯
-    \
-      ▐▛███▜▌
-     ▝▜██▜██▛▘
-       ▘   ▝
-```
+![CoachBot](screenshot.png)
 
 ## Install
 
