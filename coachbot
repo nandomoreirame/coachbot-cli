@@ -1,0 +1,115 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# CoachBot - displays a random sarcastic "motivational" quote
+# Supports multiple languages via --lang flag or COACHBOT_LANG env var
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+show_help() {
+  cat <<'EOF'
+Usage: coachbot [OPTIONS]
+
+Options:
+  -l, --lang LANG   Set language (default: en)
+  --list-langs      List available languages
+  -h, --help        Show this help message
+
+Environment:
+  COACHBOT_LANG     Set default language (overridden by --lang)
+
+Examples:
+  coachbot                  # English (default)
+  coachbot --lang pt-br     # Portuguese (Brazil)
+  COACHBOT_LANG=pt-br coachbot
+EOF
+  exit 0
+}
+
+list_langs() {
+  echo "Available languages:"
+  for f in "${SCRIPT_DIR}"/phrases*.json; do
+    local name
+    name="$(basename "$f")"
+    if [[ "$name" == "phrases.json" ]]; then
+      echo "  en (default)"
+    else
+      local lang="${name#phrases-}"
+      lang="${lang%.json}"
+      echo "  ${lang}"
+    fi
+  done
+  exit 0
+}
+
+LANG_CODE="${COACHBOT_LANG:-en}"
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -l|--lang)
+      LANG_CODE="$2"
+      shift 2
+      ;;
+    --list-langs)
+      list_langs
+      ;;
+    -h|--help)
+      show_help
+      ;;
+    *)
+      echo "Unknown option: $1" >&2
+      echo "Run 'coachbot --help' for usage." >&2
+      exit 1
+      ;;
+  esac
+done
+
+if [[ "$LANG_CODE" == "en" ]]; then
+  PHRASES_FILE="${SCRIPT_DIR}/phrases.json"
+else
+  PHRASES_FILE="${SCRIPT_DIR}/phrases-${LANG_CODE}.json"
+fi
+
+if [[ ! -f "$PHRASES_FILE" ]]; then
+  echo "Language '${LANG_CODE}' not found: $PHRASES_FILE" >&2
+  echo "Run 'coachbot --list-langs' to see available languages." >&2
+  exit 1
+fi
+
+total=$(grep -c '"phrase"' "$PHRASES_FILE")
+index=$((RANDOM % total))
+
+phrase=$(sed -n 's/.*"phrase": *"\(.*\)".*/\1/p' "$PHRASES_FILE" | sed -n "$((index + 1))p")
+phrase="${phrase}
+— CoachBot"
+
+# Word wrap at 50 chars
+wrapped=$(echo "$phrase" | fold -s -w 50)
+line_count=$(echo "$wrapped" | wc -l)
+max_len=$(echo "$wrapped" | awk '{ if (length > max) max = length } END { print max }')
+
+# Draw speech bubble
+border=$(printf '%0.s─' $(seq 1 $((max_len + 2))))
+echo " ╭${border}╮"
+
+i=0
+while IFS= read -r line; do
+  i=$((i + 1))
+  padding=$((max_len - ${#line}))
+  spaces=$(printf '%*s' "$padding" '')
+  if [[ $line_count -eq 1 ]]; then
+    echo " │ ${line}${spaces} │"
+  elif [[ $i -eq 1 ]]; then
+    echo " │ ${line}${spaces} │"
+  elif [[ $i -eq $line_count ]]; then
+    echo " │ ${line}${spaces} │"
+  else
+    echo " │ ${line}${spaces} │"
+  fi
+done <<< "$wrapped"
+
+echo " ╰${border}╯"
+echo "    \\"
+echo "      ▐▛███▜▌"
+echo "     ▝▜██▜██▛▘"
+echo "       ▘   ▝"
